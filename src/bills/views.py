@@ -243,7 +243,7 @@ class FileCSVHandlerView(APIView):
         writer.writerow({'emp_name': 'Erica Meyers', 'dept': 'IT', 'birth_month': 'March'})
         return response
 
-    
+
     def post(self, request, *args, **kwargs):
         """Post COnfiguration for File Serializer"""
         file_serializer = serializers.FileSerializer(data=request.data)
