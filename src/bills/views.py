@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.conf import settings
 
 # Models
 from . import models
@@ -260,7 +261,19 @@ class FileCSVHandlerPostView(APIView):
         if file_serializer.is_valid():
             file_serializer.save()
             # Creating Task
-            # tasks.create_massive.delay(file_serializer.data.file_data)
+            # tasks.create_massive.delay(file_serializer.data.get('file_data'))
+            serializer = serializers.ClientSerializer
+            with open(f"{settings.BASE_DIR}{file_serializer.data.get('file_data')}", 'r') as f:
+                reader = csv.reader(f)
+                is_first = True
+                columns = []
+                for row in reader:
+                    if is_first:
+                        columns = row
+                        is_first = False
+                    else:
+                        data = dict(zip(columns, row))
+                        tasks.create_one_data_later.delay(data)
             return Response(
                 file_serializer.data,
                 status=status.HTTP_201_CREATED
