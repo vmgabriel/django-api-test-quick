@@ -15,8 +15,6 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
-    path('files/', include('handler.urls')),
-
     # Authetication
     path(
         'login',

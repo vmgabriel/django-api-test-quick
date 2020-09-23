@@ -17,6 +17,11 @@ urlpatterns = [
         views.ClientDetailView.as_view(),
         name='client_by_id'
     ),
+    path(
+        'clients/<int:pk>/bills/file',
+        views.FileCSVHandlerView.as_view(),
+        name='client_by_id_by_bills'
+    ),
 
     # Product
     path('products', views.ProductListView.as_view(), name='products'),

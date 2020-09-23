@@ -219,3 +219,31 @@ def delete(model: object, filters: dict):
     with connection.cursor() as cursor:
         cursor.execute(query, values_filter)
     return True
+
+
+def get_data_value_bill_user(client_id: any) -> tuple:
+    """Get Data Bills of Client"""
+    query = """
+    SELECT b.client_id,
+           c.first_name,
+           c.last_name,
+           c.identification,
+           count(b.client_id) as bill_count
+    FROM bill as b
+    LEFT JOIN client as c on b.client_id = c.id
+    WHERE c.id = %s
+    GROUP BY
+      b.client_id,
+      c.first_name,
+      b.client_id,
+      c.last_name,
+      c.identification
+    """
+    with connection.cursor() as cursor:
+        cursor.execute(query, [client_id])
+        columns = [col[0] for col in cursor.description]
+        rows = [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+    return (columns, rows)

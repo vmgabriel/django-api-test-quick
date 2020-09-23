@@ -18,7 +18,7 @@ from . import models
 from . import serializers
 
 # Utils
-from .utils import create
+from .utils import create, get_data_value_bill_user
 
 # Extended Libraries
 from . import lib
@@ -233,14 +233,17 @@ class FileCSVHandlerView(APIView):
     permission_classes = (IsAuthenticated, )
     parser_classes = (MultiPartParser, FormParser)
 
-    def get(self, request):
+    def get(self, request, pk: any):
         """Get File Sync CSV"""
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="export.csv"'
-        writer = csv.DictWriter(response, fieldnames=['emp_name', 'dept', 'birth_month'])
+        column_format, data = get_data_value_bill_user(pk)
+        print('column format - ', column_format)
+        print('data - ', data)
+        writer = csv.DictWriter(response, fieldnames=column_format)
         writer.writeheader()
-        writer.writerow({'emp_name': 'John Smith', 'dept': 'Accounting', 'birth_month': 'November'})
-        writer.writerow({'emp_name': 'Erica Meyers', 'dept': 'IT', 'birth_month': 'March'})
+        for register in data:
+            writer.writerow(register)
         return response
 
 
