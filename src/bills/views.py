@@ -23,6 +23,9 @@ from .utils import create, get_data_value_bill_user
 # Extended Libraries
 from . import lib
 
+# Tasks
+from . import tasks
+
 
 class ProductListView(APIView):
     """Views of Product"""
@@ -256,6 +259,8 @@ class FileCSVHandlerPostView(APIView):
         file_serializer = serializers.FileSerializer(data=request.data)
         if file_serializer.is_valid():
             file_serializer.save()
+            # Creating Task
+            # tasks.create_massive.delay(file_serializer.data.file_data)
             return Response(
                 file_serializer.data,
                 status=status.HTTP_201_CREATED

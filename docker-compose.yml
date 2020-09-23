@@ -1,20 +1,20 @@
 version: "3.1"
 
 services:
-  db:
+  db-postgres:
     image: postgres
     env_file:
       - .env.postgres
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - /var/lib/postgresql/data
     networks:
       - webnet
 
   web:
     build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
+    command: python3 src/manage.py runserver 0.0.0.0:8000
     env_file:
       - ".env"
     volumes: 
@@ -23,7 +23,7 @@ services:
         - 8000:8000
     depends_on: 
       - "redis"
-      - "db"
+      - "db-postgres"
     links:
       - "redis:redis"
     networks:
@@ -43,9 +43,9 @@ services:
 
   worker:
     build: .
-    command: celery -A config worker -l info
+    command: celery -A src.config worker -l info
     depends_on:
-      - "db"
+      - "db-postgres"
       - "redis"
     env_file:
       - ".env"

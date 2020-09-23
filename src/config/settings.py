@@ -138,11 +138,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dbo_bill_data_test',
+        'NAME': 'dbo_bill',
         'USER': 'user',
         'PASSWORD': 'pass',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'HOST':'localhost', #'db-postgres',
+        'PORT': '5432',
+        'CONN_MAX_AGE': 0,
     }
 }
 
