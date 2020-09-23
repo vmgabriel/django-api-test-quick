@@ -73,6 +73,7 @@ CELERY_RESULT_BACKEND = env.get('CELERY_BROKER_BACKEND')
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ENABLE_UTC = True
 CELERY_TIMEZONE = env.get('TIME_ZONE')
 
 SIMPLE_JWT = {
@@ -141,7 +142,7 @@ DATABASES = {
         'NAME': 'dbo_bill',
         'USER': 'user',
         'PASSWORD': 'pass',
-        'HOST':'localhost', #'db-postgres',
+        'HOST': 'db-postgres',
         'PORT': '5432',
         'CONN_MAX_AGE': 0,
     }

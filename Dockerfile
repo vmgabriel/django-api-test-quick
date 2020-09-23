@@ -1,5 +1,5 @@
 FROM python:3.8.5-slim-buster
-LABEL maintainer=dbgroldan-quick
+LABEL maintainer=vmgabriel-quick
 
 WORKDIR /usr/app
 
