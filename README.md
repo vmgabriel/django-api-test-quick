@@ -19,7 +19,7 @@ Gabriel Vargas Monroy
   → docker-compose up --build -d
   ```
 
-6. **Open de page in port 3000**
+6. **Open de page in port 8000**
 
 
 #### Used technologies
