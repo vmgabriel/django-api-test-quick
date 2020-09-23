@@ -124,6 +124,7 @@ class ClientListView(APIView):
 
 class ClientDetailView(APIView):
     """Product Detail View Data Api"""
+    permission_classes = (IsAuthenticated, )
     model = models.Client
     serializer = serializers.ClientSerializer
 
@@ -228,7 +229,7 @@ class BillDetailView(APIView):
         return lib.delete_entity(self.model, self.serializer, pk)
 
 
-class FileCSVHandlerView(APIView):
+class FileCSVHandlerGetView(APIView):
     """File Csv Handler Configuration"""
     permission_classes = (IsAuthenticated, )
     parser_classes = (MultiPartParser, FormParser)
@@ -246,6 +247,9 @@ class FileCSVHandlerView(APIView):
             writer.writerow(register)
         return response
 
+
+class FileCSVHandlerPostView(APIView):
+    """Get Handler Data"""
 
     def post(self, request, *args, **kwargs):
         """Post COnfiguration for File Serializer"""

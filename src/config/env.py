@@ -3,13 +3,12 @@ Enviroment Manage
 """
 
 # Libraries
-import environ
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-env = environ.Env()
-
-URL_ENV = env.path(
-    'ENV_FILE_PATH',
-    default=(environ.Path(__file__) - 2).path('.env')()
-)()
-
-env.read_env(URL_ENV)
+env = {
+    'CELERY_BROKER_URL': os.getenv('CELERY_BROKER_URL'),
+    'CELERY_BROKER_BACKEND': os.getenv('CELERY_BROKER_BACKEND'),
+    'TIME_ZONE': os.getenv('TIME_ZONE'),
+}

@@ -19,8 +19,13 @@ urlpatterns = [
     ),
     path(
         'clients/<int:pk>/bills/file',
-        views.FileCSVHandlerView.as_view(),
+        views.FileCSVHandlerGetView.as_view(),
         name='client_by_id_by_bills'
+    ),
+    path(
+        'clients/upload',
+        views.FileCSVHandlerPostView.as_view(),
+        name='clients_upload'
     ),
 
     # Product
